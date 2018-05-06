@@ -16,6 +16,7 @@
 package com.example.android.sunshine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -112,16 +113,18 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
      * This method is overridden by our MainActivity class in order to handle RecyclerView item
      * clicks.
      *
-     * @param weatherForDay The weather for the day that was clicked
+     * @param weatherForDay The weather for th
+     *                      e day that was clicked
      */
     @Override
     public void onClick(String weatherForDay) {
         Context context = this;
-        // TODO (1) Create a new Activity called DetailActivity using Android Studio's wizard
-        // TODO (2) Change the root layout of activity_detail.xml to a FrameLayout and remove unnecessary xml attributes
-        // TODO (3) Remove the Toast and launch the DetailActivity using an explicit Intent
-        Toast.makeText(context, weatherForDay, Toast.LENGTH_SHORT)
-                .show();
+        Class destinationClass = DetailActivity.class;
+        // Completed (1) Create a new Activity called DetailActivity using Android Studio's wizard
+        // Completed (2) Change the root layout of activity_detail.xml to a FrameLayout and remove unnecessary xml attributes
+        // Completed (3) Remove the Toast and launch the DetailActivity using an explicit Intent
+        Intent openDetailIntent = new Intent(context,destinationClass);
+        startActivity(openDetailIntent);
     }
 
     /**
