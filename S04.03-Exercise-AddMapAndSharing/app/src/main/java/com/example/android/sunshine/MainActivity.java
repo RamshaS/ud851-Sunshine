@@ -23,13 +23,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.sunshine.ForecastAdapter.ForecastAdapterOnClickHandler;
 import com.example.android.sunshine.data.SunshinePreferences;
@@ -220,9 +220,31 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             loadWeatherData();
             return true;
         }
+        if(id == R.id.action_map){
+            Context context = this;
+            openMap(context);
+        return true;
+        }
 
-        // TODO (2) Launch the map when the map menu item is clicked
+        // Completed (2) Launch the map when the map menu item is clicked
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openMap(Context context) {
+        Uri.Builder mapBuilder = new Uri.Builder();
+        mapBuilder.scheme("geo");
+        mapBuilder.path(SunshinePreferences.getLocationCoordinates(this).toString());
+        mapBuilder.query(SunshinePreferences.getPreferredWeatherLocation(context));
+        Uri mapUri = mapBuilder.build();
+        Intent intentMap = new Intent(Intent.ACTION_VIEW);
+        intentMap.setData(mapUri);
+        if (intentMap.resolveActivity(getPackageManager())!= null){
+            startActivity(intentMap);
+        }else{
+            Toast.makeText(context, "Couldn't call " + mapUri.toString()
+                    + ", no receiving apps installed!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
